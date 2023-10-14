@@ -33,29 +33,29 @@ int main(int argc, char *argv[])
 {
     type *list = list_create(type, l);
     type node = {.str = "hello", .i = 0};
-    list_instert(&node, list, NULL);
+    list_insert(&node, list, NULL);
     for (int i = 0; i < MAX; i++)
     {
         node.str = "dd";
         node.i = i + 1;
-        list_instert(&node, list, NULL);
+        list_insert(&node, list, NULL);
     }
     list_print(list, &print);
     node.i = 1;
     void *temp = list_search(list, &condition, &node);
     printf("debug\n");
-    list_delete(temp, list);
+    list_delete(temp, list, destroy);
     printf("############################################\n");
     list_print(list, &print);
     node.i = 1;
     temp = list_search(list, &condition, &node);
     if (temp != NULL)
     {
-        list_delete(temp, list);
+        list_delete(temp, list, destroy);
     }
     
     node.i = 100;
-    list_instert(&node, list, NULL);
+    list_insert(&node, list, NULL);
     list_print(list, &print);
     list_destroy(list, &destroy);
     

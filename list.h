@@ -34,7 +34,7 @@ size_t list_length(void *list);
  * @param list 被插入的链表指针
  * @param dest 被插入的节点，当dest == NULL时，node会插入到链表尾部;当dest != NULL时，node会插入到dest后
 */
-bool list_instert(void *node, void *list, void *dest);
+bool list_insert(void *node, void *list, void *dest);
 /**
  * @public
  * @brief 删除链表中的节点

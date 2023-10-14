@@ -76,7 +76,7 @@ static inline bool __list_add(void *dest, void *node)
 // {
     
 // }
-bool list_instert(void *node, void *list, void *dest)
+bool list_insert(void *node, void *list, void *dest)
 {
     list_info *info = (list_info *)list;
 
