@@ -109,7 +109,7 @@ bool list_instert(void *node, void *list, void *dest)
     info->length++;
     return true;
 }
-bool list_delete(void *node, void *list)
+bool list_delete(void *node, void *list, void (*delete)(void *))
 {
     list_info *info = list;
     struct list *ptr = node + info->offset;
@@ -119,7 +119,8 @@ bool list_delete(void *node, void *list)
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
     info->length --;
-
+    delete(node);
+    
     free(node);
     return true;
 }

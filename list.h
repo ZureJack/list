@@ -41,7 +41,7 @@ bool list_instert(void *node, void *list, void *dest);
  * @param node 被删除节点指针
  * @param list 链表指针
 */
-bool list_delete(void *node, void *list);
+bool list_delete(void *node, void *list, void (*delete)(void *));
 /**
  * @public
  * @param list 链表指针
