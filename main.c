@@ -33,13 +33,16 @@ int main(int argc, char *argv[])
 {
     type *list = list_create(type, l);
     type node = {.str = "hello", .i = 0};
+    printf("line = %d\n", 43);
     list_insert(&node, list, NULL);
+    
     for (int i = 0; i < MAX; i++)
     {
         node.str = "dd";
         node.i = i + 1;
         list_insert(&node, list, NULL);
     }
+    
     list_print(list, &print);
     node.i = 1;
     void *temp = list_search(list, &condition, &node);

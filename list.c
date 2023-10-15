@@ -3,7 +3,7 @@
 #include "stddef.h"
 #include <stdlib.h>
 #include <string.h>
-
+#include <assert.h>
 
 
 typedef struct list_info {
@@ -22,10 +22,8 @@ static inline bool __list_add(void *dest, void *node);
 void *list_create_(size_t offset, size_t size)
 {
     struct list_info * ptr = calloc(1, sizeof(struct list_info));
-    if (!ptr)
-    {
-        return NULL;
-    }
+
+    if (!ptr) return NULL;
 
     ptr->index = NULL;
     ptr->length = 0;
@@ -38,6 +36,9 @@ void *list_create_(size_t offset, size_t size)
 }
 bool list_destroy(void *list, void (*destroy)(void *))
 {
+    assert(list != NULL);
+    assert(destroy != NULL);
+
     list_info *info = list;
     long long int i = info->length;
     struct list **ptr = &(info->point);
@@ -57,6 +58,8 @@ bool list_destroy(void *list, void (*destroy)(void *))
 
 size_t list_length(void *ptr)
 {
+    assert(ptr != NULL);
+
     return ((list_info *)ptr)->length;
 }
 
@@ -78,6 +81,9 @@ static inline bool __list_add(void *dest, void *node)
 // }
 bool list_insert(void *node, void *list, void *dest)
 {
+    assert(node != NULL);
+    assert(list != NULL);
+
     list_info *info = (list_info *)list;
 
     void *obj = malloc(info->size);
@@ -92,8 +98,8 @@ bool list_insert(void *node, void *list, void *dest)
         info->point = (struct list *)(obj + info->offset);
         info->point->next = info->point;
         info->point->prev = info->point;
-        
-        goto result; 
+
+        goto result;
     }
 
     if (dest != NULL)
@@ -105,12 +111,16 @@ bool list_insert(void *node, void *list, void *dest)
 
     __list_add(info->point, obj + info->offset);
 
- result:
+result:    
     info->length++;
     return true;
 }
 bool list_delete(void *node, void *list, void (*delete)(void *))
 {
+    assert(node != NULL);
+    assert(list != NULL);
+    assert(delete != NULL);
+
     list_info *info = list;
     struct list *ptr = node + info->offset;
 
@@ -119,13 +129,18 @@ bool list_delete(void *node, void *list, void (*delete)(void *))
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
     info->length --;
+
     delete(node);
-    
     free(node);
+
     return true;
 }
 void *list_search(void *list, bool (*condition)(void *, void *), void *dest)
 {
+    assert(dest != NULL);
+    assert(list != NULL);
+    assert(condition != NULL);
+
     list_info *info = list;
     long long int i = info->length;
     struct list **ptr = &(info->point);
@@ -153,6 +168,9 @@ void *list_search(void *list, bool (*condition)(void *, void *), void *dest)
 }
 void list_print(void *list, void (*print)(void *))
 {
+    assert(list != NULL);
+    assert(print != NULL);
+
     list_info *info = list;
     long long int i = info->length;
     struct list **ptr = &(info->point);
